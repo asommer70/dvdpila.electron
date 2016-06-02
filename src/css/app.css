@@ -12,17 +12,39 @@
 }
 
 .title {
+  padding-top: 4px;
   text-align: center;
+  /*-webkit-app-region: drag;*/
+  -webkit-user-select: none;
+}
+
+#titleLowerBar {
+  /*-webkit-app-region: drag;*/
+  -webkit-user-select: none;
 }
 
 .search {
   font-size: 13px;
   padding: 2px;
-  border-radius: 5px !important;
-  height: 20px;
+  height: 25px;
+  margin-top: 7px;
+  -webkit-app-region: no-drag;
 }
 
-.button.search {
+.nav-section {
+  padding-left: 10px;
+}
+
+.button.nav-btn {
   background-color: white;
   color: #424242;
+  padding: 4px;
+  margin-top: 10px;
+  font-size: 13px;
+  -webkit-app-region: no-drag;
+}
+
+.add-dvd {
+  margin-top: 10px;
+  -webkit-app-region: no-drag;
 }
