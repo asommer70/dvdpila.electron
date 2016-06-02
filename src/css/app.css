@@ -1,0 +1,28 @@
+.titlebar {
+  -webkit-user-select: none;
+  -webkit-app-region: drag;
+  /*-webkit-user-drag: auto;*/
+  /*padding: 20px 10px 15px 10px;*/
+  font-size: 13px;
+  background-color: rgb(232, 230, 232);
+  background-image: linear-gradient(rgb(232, 230, 232) 0%, rgb(209, 207, 209) 100%);
+  border-bottom-color: rgb(194, 192, 194);
+  border-bottom-style: solid;
+  border-bottom-width: 1px;
+}
+
+.title {
+  text-align: center;
+}
+
+.search {
+  font-size: 13px;
+  padding: 2px;
+  border-radius: 5px !important;
+  height: 20px;
+}
+
+.button.search {
+  background-color: white;
+  color: #424242;
+}
