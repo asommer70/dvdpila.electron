@@ -1,0 +1,40 @@
+{
+  "name": "dvdpila-desktop",
+  "version": "1.0.0",
+  "description": "DVD Pila! Desktop Electron application",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron main.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": ""
+  },
+  "keywords": [
+    "Electron",
+    "DVD",
+    "Pila",
+    "Desktop"
+  ],
+  "author": "GitHub",
+  "license": "MIT",
+  "bugs": {
+    "url": ""
+  },
+  "homepage": "",
+  "devDependencies": {
+    "babel-core": "^6.9.1",
+    "babel-preset-es2015": "^6.9.0",
+    "babel-preset-react": "^6.5.0",
+    "babelify": "^7.3.0",
+    "browserify": "^13.0.1",
+    "electron-prebuilt": "^1.2.0",
+    "gulp": "^3.9.1",
+    "gulp-concat": "^2.5.0",
+    "gulp-watch": "^4.2.4",
+    "react": "^15.1.0",
+    "react-dom": "^15.1.0",
+    "vinyl-source-stream": "^1.1.0",
+    "watchify": "^3.7.0"
+  }
+}

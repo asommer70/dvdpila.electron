@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <title>DVD Pila!</title>
+
+    <link rel="stylesheet" type="text/css" href="./css/foundation.css" />
+    <link rel="stylesheet" type="text/css" href="./css/app.css" />
+  </head>
+  <body>
+
+    <div class="row">
+      <div class="columns small-12">
+        <div id="app"></div>
+      </div>
+    </div>
+
+    <!-- Needed to import served type JavaScripts... -->
+    <script>if (typeof module === 'object') {window.module = module; module = undefined;}</script>
+
+    <script type="text/javascript" src="./js/vendor/jquery.js"></script>
+    <script type="text/javascript" src="./js/vendor/what-input.js"></script>
+    <script type="text/javascript" src="./js/vendor/foundation.js"></script>
+
+    <script>if (window.module) module = window.module;</script>
+
+    <script>
+      // You can also require other files to run in this process
+      require('./app.js')
+      // require('./renderer.js')
+
+      $(document).foundation();
+    </script>
+  </body>
+</html>
