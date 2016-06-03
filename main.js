@@ -15,7 +15,7 @@ function createWindow () {
   mainWindow = new BrowserWindow({minWidth: 800, minHeight: 600, frame: false, title: 'DVD Pila!', titleBarStyle: 'hidden'})
 
   // and load the index.html of the app.
-  mainWindow.loadURL(`file://${__dirname}/build/index.html`)
+  mainWindow.loadURL(`file://${__dirname}/src/index.html`)
 
   // Open the DevTools.
   mainWindow.webContents.openDevTools()
@@ -29,14 +29,15 @@ function createWindow () {
   })
 
   settingsWindow = new BrowserWindow({width: 400, height: 300, frame: false, title: 'Settings', show: false, resizable: false});
-  settingsWindow.loadURL(`file://${__dirname}/build/settings.html`);
+  settingsWindow.loadURL(`file://${__dirname}/src/settings.html`);
 
-  ipcMain.on('toggle-settings', () => {
+  ipcMain.on('toggle-settings', (event) => {
     if (settingsWindow.isVisible()) {
       settingsWindow.hide();
     } else {
       settingsWindow.show();
     }
+    event.sender.send('settings-update');
   })
 }
 

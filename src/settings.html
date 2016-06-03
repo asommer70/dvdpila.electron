@@ -27,8 +27,10 @@
         </div>
 
         <div class="row">
-          <div class="columns small-8">
-            <input id="saveSettings" type="submit" class="button success" value="Save Settings"/>
+          <div class="columns small-6">
+            <input id="saveSettings" type="submit" class="button success small" value="Save"/>
+            <span>&nbsp;&nbsp;</span>
+            <button id="closeSettings" class="button secondary small">Cancel</button>
           </div>
         </div>
     </div>
@@ -55,6 +57,10 @@
     })
 
     $('#url').val(localStorage.getItem('url'));
+
+    $('#closeSettings').on('click', () => {
+      ipcRenderer.send('toggle-settings');
+    });
   </script>
 
   </body>
