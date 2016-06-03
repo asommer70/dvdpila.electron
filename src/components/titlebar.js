@@ -1,8 +1,13 @@
 import React, { Component } from 'react';
 
 export default class TitleBar extends Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
+  }
+
+  handleBackClick() {
+    console.log('this.context.router:', this.context.router);
+    // console.log(this.context.router.push(path))
   }
 
   render() {
@@ -14,7 +19,7 @@ export default class TitleBar extends Component {
         <div className="row" id="titleLowerBar">
           <div className="columns small-3 float-left nav-section">
             <div className="button-group">
-              <a className="button tiny nav-btn">Back</a>
+              <a className="button tiny nav-btn" onClick={this.handleBackClick.bind(this)}>Back</a>
               <a className="button tiny nav-btn">Forward</a>
             </div>
           </div>
