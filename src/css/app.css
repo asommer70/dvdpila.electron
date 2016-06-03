@@ -1,3 +1,7 @@
+body {
+  background-color: #ECECD1;
+}
+
 .titlebar {
   -webkit-user-select: none;
   -webkit-app-region: drag;
@@ -71,7 +75,6 @@
 }
 
 .settingsBody {
-  background-color: #ECECD1;
   min-height: 300px;
 }
 
@@ -81,6 +84,13 @@
 }
 
 #app {
-  background-color: #ECECD1;
   min-height: 600px;
+}
+
+.dvds-list {
+  background-color: white;
+  padding: 20px;
+}
+.dvds-list .column {
+  margin-bottom: 20px;
 }
