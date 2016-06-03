@@ -3,9 +3,9 @@ class PilaAPI {
   constructor() {
   }
 
-  getDvds(url, callback) {
+  getDvds(url, page, callback) {
     console.log('Getting DVDs...');
-    fetch(url + '/dvds.json')
+    fetch(url + '/dvds.json?page=' + page)
       .then((response) => response.text())
       .then((responseText) => {
         var dvds = JSON.parse(responseText);
