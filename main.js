@@ -1,6 +1,8 @@
 const electron = require('electron')
 // Module to control application life.
 const app = electron.app
+// const {Menu, MenuItem, ipcMain} = electron;
+const {ipcMain} = require('electron');
 // Module to create native browser window.
 const BrowserWindow = electron.BrowserWindow
 
@@ -10,7 +12,7 @@ let mainWindow
 
 function createWindow () {
   // Create the browser window.
-  mainWindow = new BrowserWindow({width: 800, height: 600, frame: false, title: 'DVD Pila!', titleBarStyle: 'hidden'})
+  mainWindow = new BrowserWindow({minWidth: 800, minHeight: 600, frame: false, title: 'DVD Pila!', titleBarStyle: 'hidden'})
 
   // and load the index.html of the app.
   mainWindow.loadURL(`file://${__dirname}/build/index.html`)
@@ -25,6 +27,25 @@ function createWindow () {
     // when you should delete the corresponding element.
     mainWindow = null
   })
+
+  settingsWindow = new BrowserWindow({width: 400, height: 300, frame: false, title: 'Settings', show: false});
+  settingsWindow.loadURL(`file://${__dirname}/build/settings.html`);
+  settingsWindow.webContents.openDevTools()
+
+
+  ipcMain.on('toggle-settings', () => {
+    if (settingsWindow.isVisible()) {
+      settingsWindow.hide();
+    } else {
+      settingsWindow.show();
+    }
+  })
+}
+
+function settingsPopup(window) {
+  console.log('Settings woo...');
+  // window.open('build/settings.html', 'Settings');
+  // settingsWindow.webContents.open();
 }
 
 // This method will be called when Electron has finished

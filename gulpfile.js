@@ -8,7 +8,7 @@ var babelify = require("babelify");
 var fs = require('fs');
 
 gulp.task('copy', function() {
-  gulp.src(['./src/index.html', './src/css/**/*', './src/js/**/*'], { "base" : "./src/." })
+  gulp.src(['./src/*.html', './src/css/**/*', './src/js/**/*'], { "base" : "./src/." })
   .pipe(gulp.dest('./build/'));
 })
 

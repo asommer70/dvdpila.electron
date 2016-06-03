@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>DVD Pila! | Settings</title>
+
+    <link rel="stylesheet" type="text/css" href="./css/foundation.css" />
+    <link rel="stylesheet" type="text/css" href="./css/app.css" />
+  </head>
+  <body>
+
+    <div class="titlebar settingsBar">
+      <div class="buttons">
+        <button class="button tiny close-btn">&times;</button>
+      </div>
+      <div class="title">
+        Settings
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="columns small-12">
+        <div class="row">
+          <div class="columns small-8">
+            <label for="url">URL</label>
+            <input name="url" id="url" type="text" placeholder="URL for local DVD Pila! server"/>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="columns small-8">
+            <input id="saveSettings" type="submit" class="button success" value="Save Settings"/>
+          </div>
+        </div>
+    </div>
+
+    <!-- Needed to import served type JavaScripts... -->
+    <script>if (typeof module === 'object') {window.module = module; module = undefined;}</script>
+
+    <script type="text/javascript" src="./js/vendor/jquery.js"></script>
+    <script type="text/javascript" src="./js/vendor/what-input.js"></script>
+    <script type="text/javascript" src="./js/vendor/foundation.js"></script>
+
+    <script>if (window.module) module = window.module;</script>
+
+  <script>
+    const {remote, ipcRenderer} = require('electron');
+
+    $('.close-btn').on('click', () => {
+      ipcRenderer.send('toggle-settings');
+    })
+
+    $('#saveSettings').on('click', () => {
+      localStorage.setItem('url', $('#url').val());
+      ipcRenderer.send('toggle-settings');
+    })
+  </script>
+
+  </body>
+</html>

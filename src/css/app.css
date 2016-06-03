@@ -44,7 +44,38 @@
   -webkit-app-region: no-drag;
 }
 
+.settingsBar {
+  min-height: 30px;
+}
+
+.button.close-btn {
+  border-radius: 45%;
+  background-color: rgb(232, 230, 232);
+  color: rgb(232, 230, 232);
+  padding: 2px;
+  margin-top: 8px;
+  margin-left: 8px;
+  margin-bottom: 16px;
+  font-size: 8px;
+  -webkit-app-region: no-drag;
+  border: 1px solid #aaaaaa;
+}
+.button.close-btn:hover {
+  color: #424242;
+  background-color: #F07241;
+  border: 1px solid #424242;
+}
+
+.buttons {
+  float: left;
+}
+
 .add-dvd {
   margin-top: 10px;
   -webkit-app-region: no-drag;
+}
+
+#app {
+  background-color: #ECECD1;
+  min-height: 600px;
 }
