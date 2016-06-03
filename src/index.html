@@ -6,6 +6,8 @@
 
     <link rel="stylesheet" type="text/css" href="./css/foundation.css" />
     <link rel="stylesheet" type="text/css" href="./css/app.css" />
+
+    <script type="text/javascript" src="./js/menu.js"></script>
   </head>
   <body>
 
@@ -21,55 +23,13 @@
     <script>if (window.module) module = window.module;</script>
 
     <script>
-    const {remote, ipcRenderer} = require('electron');
-    const {Menu, MenuItem} = remote;
-
-    var template = [
-      {
-        label: 'Electron',
-        submenu: [
-          {
-            label: 'Settings',
-            accelerator: 'Shift+Command+S',
-            click: () => { ipcRenderer.send('toggle-settings') }
-          },
-          {
-            label: 'Close',
-            accelerator: 'Command+w',
-            selector: 'close:'
-          }
-        ]
-      },
-      {
-        label: 'Help',
-        role: 'help',
-        submenu: [
-          {
-            label: 'Website',
-            click: () => { remote.shell.openExternal('http://dvdpila.thehoick.com') }
-          },
-        ]
-      }
-    ];
-    var menu = Menu.buildFromTemplate(template);
-    Menu.setApplicationMenu(menu);
-    // window.addEventListener('contextmenu', (e) => {
-    //   e.preventDefault();
-    //   menu.popup(remote.getCurrentWindow());
-    // }, false);
-    </script>
-
-    <script>
       // You can also require other files to run in this process
       require('babel-register');
       require('./app.js')
       // require('./renderer.js')
 
-      // document.querySelector('#titleBar').style['-webkit-app-region'] = 'drag';
-      // document.querySelector('#title').style['-webkit-app-region'] = 'drag';
-      // document.querySelector('#titleLowerBar').style['-webkit-app-region'] = 'drag';
-
       $(document).foundation();
+      $("body").css("overflow", "hidden");
     </script>
   </body>
 </html>
