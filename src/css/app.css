@@ -70,6 +70,11 @@
   float: left;
 }
 
+.settingsBody {
+  background-color: #ECECD1;
+  min-height: 300px;
+}
+
 .add-dvd {
   margin-top: 10px;
   -webkit-app-region: no-drag;

@@ -17,7 +17,7 @@
       </div>
     </div>
 
-    <div class="row">
+    <div class="row settingsBody">
       <div class="columns small-12">
         <div class="row">
           <div class="columns small-8">
@@ -53,6 +53,8 @@
       localStorage.setItem('url', $('#url').val());
       ipcRenderer.send('toggle-settings');
     })
+
+    $('#url').val(localStorage.getItem('url'));
   </script>
 
   </body>

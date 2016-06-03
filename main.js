@@ -28,10 +28,8 @@ function createWindow () {
     mainWindow = null
   })
 
-  settingsWindow = new BrowserWindow({width: 400, height: 300, frame: false, title: 'Settings', show: false});
+  settingsWindow = new BrowserWindow({width: 400, height: 300, frame: false, title: 'Settings', show: false, resizable: false});
   settingsWindow.loadURL(`file://${__dirname}/build/settings.html`);
-  settingsWindow.webContents.openDevTools()
-
 
   ipcMain.on('toggle-settings', () => {
     if (settingsWindow.isVisible()) {
