@@ -26,8 +26,8 @@ ReactDOM.render((
   <Router history={hashHistory}>
     <Route path="/" component={App}>
       <IndexRoute component={Dvds}/>
-      <Route path="/dvds" component={Dvds}/>
-      <Route path="/dvds/:id" component={Dvd}/>
+      <Route path="/dvds" name="dvds" component={Dvds}/>
+      <Route path="/dvds/:id" name="dvd" component={Dvd}/>
     </Route>
   </Router>
 ), document.getElementById('app'))

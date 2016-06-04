@@ -1,6 +1,7 @@
 'use babel';
 
 import React, { Component } from 'react';
+import {remote, ipcRenderer} from 'electron';
 import { Link } from 'react-router'
 import PilaAPI from '../lib/pila_api';
 var api = new PilaAPI();

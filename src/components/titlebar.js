@@ -3,10 +3,25 @@ import React, { Component } from 'react';
 export default class TitleBar extends Component {
   constructor(props) {
     super(props);
+
+    this.state = {
+      history: {}
+    }
+  }
+
+  componentDidMount() {
+    // Listen for route event and receive history object.
+    ipcRenderer.on('routed', (event, history) => {
+      console.log('ipcRenderer.on routed history:', history);
+      this.setState({history: history})
+    });
   }
 
   handleBackClick() {
-    console.log('this.context.router:', this.context.router);
+    // console.log('this.context.router:', this.props);
+    console.log('this.state.history:', this.state.history);
+    // Send route event?
+    this.state.history.goBack();
     // console.log(this.context.router.push(path))
   }
 

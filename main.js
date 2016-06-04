@@ -39,6 +39,11 @@ function createWindow () {
     }
     event.sender.send('settings-update');
   })
+
+  ipcMain.on('routed', (event, history) => {
+    console.log('ipcMain on routed history:', history, 'event:', event);
+    event.sender.send('routed', history);
+  })
 }
 
 function settingsPopup(window) {
