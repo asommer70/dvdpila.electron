@@ -95,3 +95,27 @@ body {
 .dvds-list .column {
   margin-bottom: 20px;
 }
+
+.dvd-container {
+  background-color: #ffffff;
+}
+
+.dvd-title {
+  margin-top: 10px;
+}
+
+.dvd-attr li:nth-child(odd) {
+  background: #eeeeee;
+}
+.dvd-attr li {
+  margin: 10px 0;
+  padding: 5px;
+}
+
+.dvd-info {
+  overflow-y: scroll;
+}
+
+.player {
+  max-width: 490px;
+}
