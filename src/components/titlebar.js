@@ -1,28 +1,21 @@
 import React, { Component } from 'react';
+import { hashHistory } from 'react-router'
+
 
 export default class TitleBar extends Component {
   constructor(props) {
     super(props);
-
-    this.state = {
-      history: {}
-    }
-  }
-
-  componentDidMount() {
-    // Listen for route event and receive history object.
-    ipcRenderer.on('routed', (event, history) => {
-      console.log('ipcRenderer.on routed history:', history);
-      this.setState({history: history})
-    });
   }
 
   handleBackClick() {
-    // console.log('this.context.router:', this.props);
-    console.log('this.state.history:', this.state.history);
-    // Send route event?
-    this.state.history.goBack();
-    // console.log(this.context.router.push(path))
+    var page = localStorage.getItem('page');
+    if (page == null) {
+      page = 1;
+    }
+    hashHistory.push({
+      pathname: '/dvds',
+      query: { page: page }
+    })
   }
 
   render() {
@@ -35,7 +28,6 @@ export default class TitleBar extends Component {
           <div className="columns small-3 float-left nav-section">
             <div className="button-group">
               <a className="button tiny nav-btn" onClick={this.handleBackClick.bind(this)}>Back</a>
-              <a className="button tiny nav-btn">Forward</a>
             </div>
           </div>
 

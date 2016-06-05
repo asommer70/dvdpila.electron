@@ -10,15 +10,7 @@ var api = new PilaAPI();
 export default class Dvd extends Component {
   constructor(props) {
     super(props);
-
-    console.log('dvd props.history:', props.history);
-    this.props = props;
-    // listen for route event and send back history?
-  }
-
-  componentDidMount() {
-    // Send route object to title bar?
-    ipcRenderer.send('routed', this.props.history);
+    console.log('Dvd props.location.query.page:', props.location.query.page);
   }
 
   render() {

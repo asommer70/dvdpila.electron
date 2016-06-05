@@ -39,17 +39,6 @@ function createWindow () {
     }
     event.sender.send('settings-update');
   })
-
-  ipcMain.on('routed', (event, history) => {
-    console.log('ipcMain on routed history:', history, 'event:', event);
-    event.sender.send('routed', history);
-  })
-}
-
-function settingsPopup(window) {
-  console.log('Settings woo...');
-  // window.open('build/settings.html', 'Settings');
-  // settingsWindow.webContents.open();
 }
 
 // This method will be called when Electron has finished

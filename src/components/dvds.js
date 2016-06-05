@@ -7,8 +7,8 @@ import PilaAPI from '../lib/pila_api';
 var api = new PilaAPI();
 
 export default class Dvds extends Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
 
     this.state = {
       dvds: [],
@@ -33,7 +33,14 @@ export default class Dvds extends Component {
   }
 
   componentDidMount() {
-    api.getDvds(this.state.url, 1, (data) => {
+    var page;
+    if (localStorage.getItem('page') !== null) {
+      page = localStorage.getItem('page');
+    } else {
+      page = 1;
+    }
+    
+    api.getDvds(this.state.url, page, (data) => {
       console.log('data:', data);
       var pages = Array.apply(null, Array(9)).map(function (_, i) {return i;});
       this.setState({dvds: data.dvds, totalPages: data.count / 10, pages: pages});
@@ -53,6 +60,7 @@ export default class Dvds extends Component {
   handlePageClick(event) {
     console.log('pageClick event.target:', $(event.target).data().page);
     var page = $(event.target).data().page;
+    localStorage.setItem('page', page);
     api.getDvds(this.state.url, page, (data) => {
       // var pages = Array.apply(null, Array(page + )).map(function (_, i) {return i;});
       var pages = [];
@@ -84,7 +92,7 @@ export default class Dvds extends Component {
                   />
 
                   <div className="dvd-title">
-                    <Link to={`dvds/${dvd.id}`}>{dvd.title}</Link>
+                    <Link to={`dvds/${dvd.id}?page=${this.state.currentPage}`}>{dvd.title}</Link>
                   </div>
 
                   {dvd.tags.map((tag, idx) => {
