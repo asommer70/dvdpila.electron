@@ -38,11 +38,11 @@ export default class Dvd extends Component {
     var dvd = this.state.dvd;
     return (
       <span>
-      <div className="row dvd-container">
+      <div className="row main dvd-container">
         <div className="small-4 columns dvd-info">
           <br/>
 
-          <img src={dvd.image_url} className='th'/>
+          <img src={dvd.image_url} className='thumbnail'/>
 
           <br/><br/>
 

@@ -38,7 +38,12 @@ function createWindow () {
       settingsWindow.show();
     }
     event.sender.send('settings-update');
-  })
+  });
+
+  ipcMain.on('search', (event, term) => {
+    console.log('term:', term);
+    event.sender.send('search', term);
+  });
 }
 
 // This method will be called when Electron has finished

@@ -10,6 +10,8 @@ export default class Dvds extends Component {
   constructor(props) {
     super(props);
 
+    console.log('dvds props:', props);
+
     this.state = {
       dvds: [],
       url: '',
@@ -26,10 +28,29 @@ export default class Dvds extends Component {
       console.log('localStorage url:', url);
     });
 
+    ipcRenderer.on('search', (event, term) => {
+      console.log('term:', term);
+      if (term === '') {
+        console.log('Getting first page...');
+        api.getDvds(this.state.url, 1, (data) => {
+          this.setState({dvds: data.dvds});
+        });
+      } else {
+        api.search(this.state.url, term, (data) => {
+          this.setState({dvds: data.dvds});
+        });
+      }
+    });
+
+
     var url = localStorage.getItem('url');
     if (url !== null) {
       this.setState({url: url});
     }
+  }
+
+  componentWillUnmount() {
+    ipcRenderer.removeAllListeners(['search']);
   }
 
   componentDidMount() {
@@ -39,12 +60,19 @@ export default class Dvds extends Component {
     } else {
       page = 1;
     }
-    
-    api.getDvds(this.state.url, page, (data) => {
-      console.log('data:', data);
-      var pages = Array.apply(null, Array(9)).map(function (_, i) {return i;});
-      this.setState({dvds: data.dvds, totalPages: data.count / 10, pages: pages});
-    });
+
+    if (this.props.location.state !== null) {
+      if (this.props.location.state.dvds !== null) {
+        console.log('this.props.location.state:', this.props.location.state);
+        this.setState({dvds: this.props.location.state.dvds});
+      }
+    } else {
+      api.getDvds(this.state.url, page, (data) => {
+        console.log('data:', data);
+        var pages = Array.apply(null, Array(9)).map(function (_, i) {return i;});
+        this.setState({dvds: data.dvds, totalPages: data.count / 10, pages: pages});
+      });
+    }
   }
 
   paginate() {
@@ -73,23 +101,27 @@ export default class Dvds extends Component {
 
   render() {
     return (
-      <div className="row">
+      <div className="row main">
         <div className="columns small-12">
-          <div className={this.state.dvds.length == 0 ? "no-results text-center" : "no-results text-center hide" }>Getting DVDs...</div>
-
           <div className="dvds-list row small-up-5">
+            <div className={this.state.dvds.length == 0 ? "no-results" : "no-results hide" }>
+              No results found for: {this.props.location.state !== null ? this.props.location.state.term : ''}
+            </div>
+
             {this.state.dvds.map((dvd, idx) => {
               return (
                 <div className="column text-center" key={dvd.id}>
-                  <img
-                    src={dvd.image_url ? dvd.image_url : localStorage.getItem('url') + '/img/dvdpila_poster.png'}
-                    data-tooltip
-                    aria-haspopup="true"
-                    className={idx < 5 ? "thumbnail has-tip" : "thumbnail has-tip top"}
-                    data-disable-hover="false"
-                    tabindex="1"
-                    title={dvd.abstract_txt}
-                  />
+                  <Link to={`dvds/${dvd.id}?page=${this.state.currentPage}`}>
+                    <img
+                      src={dvd.image_url ? dvd.image_url : localStorage.getItem('url') + '/img/dvdpila_poster.png'}
+                      data-tooltip
+                      aria-haspopup="true"
+                      className={idx < 5 ? "thumbnail has-tip" : "thumbnail has-tip top"}
+                      data-disable-hover="false"
+                      tabindex="1"
+                      title={dvd.abstract_txt}
+                    />
+                  </Link>
 
                   <div className="dvd-title">
                     <Link to={`dvds/${dvd.id}?page=${this.state.currentPage}`}>{dvd.title}</Link>

@@ -1,10 +1,24 @@
 import React, { Component } from 'react';
-import { hashHistory } from 'react-router'
+import { hashHistory } from 'react-router';
+import PilaAPI from '../lib/pila_api';
+var api = new PilaAPI();
+import {remote, ipcRenderer} from 'electron';
 
 
 export default class TitleBar extends Component {
   constructor(props) {
     super(props);
+
+    this.state = {
+      url: ''
+    }
+  }
+
+  componentWillMount() {
+    var url = localStorage.getItem('url');
+    if (url !== null) {
+      this.setState({url: url});
+    }
   }
 
   handleBackClick() {
@@ -16,6 +30,29 @@ export default class TitleBar extends Component {
       pathname: '/dvds',
       query: { page: page }
     })
+  }
+
+  handleSearch(event) {
+    if (event.keyCode == 13) {
+      var term = event.target.value;
+
+      console.log('term:', typeof(term));
+
+      ipcRenderer.send('search', term);
+
+      if (window.location.hash.split('/').length >= 3) {
+        if (term == '') {
+          ipcRenderer.send('search', term);
+        } else {
+          api.search(this.state.url, term, (data) => {
+            hashHistory.push({
+              pathname: '/dvds',
+              state: {dvds: data.dvds, term: term}
+            })
+          });
+        }
+      }
+    }
   }
 
   render() {
@@ -36,7 +73,7 @@ export default class TitleBar extends Component {
           </div>
 
           <div className="columns small-3 float-right">
-            <input className="input-group-field search" type="text" placeholder="Search" />
+            <input className="input-group-field search" type="text" placeholder="Search" onKeyUp={this.handleSearch.bind(this)}/>
           </div>
         </div>
       </div>

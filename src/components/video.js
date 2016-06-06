@@ -15,7 +15,79 @@ export default class Video extends Component {
   componentDidMount() {
     var $player = $('video');
     var player = $player[0];
-    this.setState({player: player, $player: $player});
+    this.setState({player: player, $player: $player}, () => {
+      // Map the space bar.
+      this.state.$player.on('focus', (event) => {
+        $(window).on('keydown', (e) => {
+          return !(e.keyCode == 32);
+        });
+      });
+
+      // Re-enable space bar.
+      this.state.$player.on('blur', (e) => {
+        $(window).off('keydown');
+      });
+
+      this.state.$player.on('ended', (e) => {
+        console.log('Video has ended...');
+        // if $player.hasClass('episode')
+        //   url = '/episodes/' + $player.data().episode + '.json'
+        //   window.dispatcher.trigger('stop', {id: $player.data().episode, type: 'episode'});
+        // else
+        //   url = '/dvds/' + $player.data().dvd + '.json'
+        //   window.dispatcher.trigger('stop', {id: $player.data().dvd, type: 'dvd'});
+        //
+        // $.ajax({
+        //   url: url,
+        //   method: 'put',
+        //   data: 'dvd[playback_time]=' + 0
+        // })
+      });
+
+      // Save playback_time when paused.
+      this.state.$player.on('pause', (e) => {
+        this.state.$player.focus();
+
+        // Do some Maths on the playback time.
+        var videoTime = this.getVideoTime(this.state.player.currentTime);
+
+        var url, type;
+        // Determine the put URL.
+        if ($player.hasClass('episode')) {
+          url = '/episodes/' + $player.data().episode + '.json'
+          type = 'episode'
+          // window.dispatcher.trigger('pause', {id: $player.data().episode, type: type})
+        } else {
+          url = '/dvds/' + $player.data().dvd + '.json'
+          type = 'dvd'
+          // window.dispatcher.trigger('pause', {id: $player.data().dvd, type: type})
+        }
+
+        // Update timer fields.
+        // $.each $('.timer'), (idx, timer) ->
+        //   $timer = $(timer)
+        //   $timer.val(videoTime)
+
+          // # Set the first Option in the Bookmark dropdown's text.
+          // if $timer.prop('nodeName') == 'OPTION'
+          //   $timer.text(Math.floor(videoTime))
+
+        // Do the putting.
+        // $.ajax({
+        //   url: url,
+        //   method: 'put',
+        //   data: type + '[playback_time]=' + videoTime
+        // }).then (dvd) ->
+        //   $('.player').on 'play', (e) ->
+        //     play_location(this)
+      });
+
+      // # Start playing at the playback_time.
+      this.state.$player.on('play', (e) => {
+        this.state.$player.focus();
+        this.playLocation(this);
+      });
+    });
   }
 
   handleClick(event) {
@@ -98,6 +170,39 @@ export default class Video extends Component {
     } else if (event.keyCode == 37) {
       this.state.player.currentTime -= 1
     }
+  }
+
+  getVideoTime(time) {
+    var hours = Math.floor(time / 3600);
+    var minutes = Math.floor(time / 60);
+    if (minutes > 59) {
+      minutes = Math.floor(time / 60) - 60;
+    }
+
+    var seconds = Math.round(time - minutes * 60);
+    if (seconds > 3599) {
+      seconds = Math.round(time - minutes * 60) - 3600;
+    }
+
+    return time
+  }
+
+  playLocation() {
+    console.log('playLocation...');
+    this.state.$player.focus();
+    var videoTime = this.getVideoTime(this.state.player.currentTime);
+
+    if (this.state.$player.hasClass('episode')) {
+      var url = '/episodes/' + this.state.$player.data().episode + '.json'
+      // window.dispatcher.trigger('play', {id: $player.data().episode, type: 'episode'})
+    } else {
+      var url = this.props.dvd.url;
+      // window.dispatcher.trigger('play', {id: $player.data().dvd, type: 'dvd'})
+    }
+
+    // $.get(url).then (data) ->
+    //   self.currentTime = data.playback_time
+    //   self.play()
   }
 
   render() {
