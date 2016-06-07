@@ -126,3 +126,8 @@ video {
   width: 450px;
   border: 5px solid #475333;
 }
+
+.delete {
+  color: #F07241;
+  font-size: 10px;
+}

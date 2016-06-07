@@ -92,6 +92,7 @@ export default class Video extends Component {
 
   handleClick(event) {
     // Play and Pause when video element is clicked.
+    console.log('this.event.target:', this.event.target);
     this.state.$player.focus();
 
     if (this.state.$player.attr('src') != undefined) {
@@ -135,7 +136,6 @@ export default class Video extends Component {
 
   handleWheel(event) {
     // Seek the video on scroll.
-    console.log('onWheel event.deltaMode:', event.deltaMode, 'event.deltaY:', event.deltaY, 'event.deltaX:', event.deltaX);
     event.preventDefault();
     event.stopPropagation();
     this.state.$player.focus();
@@ -193,7 +193,7 @@ export default class Video extends Component {
     var videoTime = this.getVideoTime(this.state.player.currentTime);
 
     if (this.state.$player.hasClass('episode')) {
-      var url = '/episodes/' + this.state.$player.data().episode + '.json'
+      var url = this.props.episode.url;
       // window.dispatcher.trigger('play', {id: $player.data().episode, type: 'episode'})
     } else {
       var url = this.props.dvd.url;
@@ -206,9 +206,11 @@ export default class Video extends Component {
   }
 
   render() {
+    console.log('this.props:', this.props);
+
     return (
       <video
-        id={this.props.dvd.id}
+        id={this.props.episode === null ? this.props.episode.id : this.props.dvd.id}
         className="player"
         poster={this.props.poster}
          preload="false"

@@ -23,7 +23,7 @@ class PilaAPI {
         callback(dvd);
       })
       .catch((error) => {
-        console.log('Can not get DVD...');
+        console.log('Can not get DVD...', error);
       });
   }
 
