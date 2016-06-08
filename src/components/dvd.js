@@ -29,15 +29,16 @@ export default class Dvd extends Component {
 
   componentDidMount() {
     api.getDvd(this.state.url, this.props.params.id, (data) => {
+      console.log('getDvd data:', data);
       this.setState({dvd: data});
     });
   }
 
   render() {
     var dvd = this.state.dvd;
-    
+
     var videos;
-    if (dvd.file_url == null && dvd.episodes != undefined) {
+    if (dvd.file_url == null && this.state.episodes != null) {
       videos = (
         <ul className="episodes no-bullet">
           {
@@ -48,7 +49,7 @@ export default class Dvd extends Component {
                     <p><strong>Name:</strong> {episode.name}</p>
 
                     <div className="player-div">
-                      <video className="player episode" dvd={dvd} episode={episode} poster={this.state.url + '/img/dvdpila_poster.png'} />
+                      <Video poster={this.state.url + '/img/dvdpila_poster.png'} dvd={dvd} episode={episode} />
                       <br/>
 
                       <EpisodeForm episode={episode} url={this.state.url} />
@@ -63,12 +64,12 @@ export default class Dvd extends Component {
         </ul>
       )
     } else {
-      videos = (
-        <div className="player-div">
-          <Video poster={this.state.url + '/img/dvdpila_poster.png'} dvd={dvd} />
-        </div>
-      )
+      console.log('dvd:', dvd);
+
+      videos = <div className="player-div"><Video poster={this.state.url + '/img/dvdpila_poster.png'} dvd={dvd} episode={null} /></div>;
     }
+
+    // console.log('videos:', videos);
 
     return (
       <span>

@@ -6,16 +6,37 @@ export default class Video extends Component {
   constructor(props) {
     super(props);
 
+    console.log('Video props:', props);
+
     this.state = {
       player: undefined,
-      $player: undefined
+      $player: undefined,
+      file_url: '',
+      url: '',
+      type: ''
     }
   }
 
   componentDidMount() {
-    var $player = $('video');
+    console.log('componentDidMount this.props:', this.props);
+    var file_url, url, type, $player;
+    if (this.props.episode !== null) {
+      $player = $('#' + this.props.episode.id);
+      file_url = this.props.episode.file_url;
+      url = this.props.episode.url;
+      type = 'episode'
+    } else {
+      console.log('Video componentDidMount this.props:', this.props)
+      $player = $('#' + this.props.dvd.id);
+      console.log('$player:', $player);
+
+      file_url = this.props.dvd.file_url;
+      url = this.props.dvd.url;
+      type = 'dvd'
+    }
     var player = $player[0];
-    this.setState({player: player, $player: $player}, () => {
+
+    this.setState({player: player, $player: $player, file_url: file_url, url: url, type: type}, () => {
       // Map the space bar.
       this.state.$player.on('focus', (event) => {
         $(window).on('keydown', (e) => {
@@ -30,12 +51,7 @@ export default class Video extends Component {
 
       this.state.$player.on('ended', (e) => {
         console.log('Video has ended...');
-        // if $player.hasClass('episode')
-        //   url = '/episodes/' + $player.data().episode + '.json'
-        //   window.dispatcher.trigger('stop', {id: $player.data().episode, type: 'episode'});
-        // else
-        //   url = '/dvds/' + $player.data().dvd + '.json'
-        //   window.dispatcher.trigger('stop', {id: $player.data().dvd, type: 'dvd'});
+
         //
         // $.ajax({
         //   url: url,
@@ -50,18 +66,6 @@ export default class Video extends Component {
 
         // Do some Maths on the playback time.
         var videoTime = this.getVideoTime(this.state.player.currentTime);
-
-        var url, type;
-        // Determine the put URL.
-        if ($player.hasClass('episode')) {
-          url = '/episodes/' + $player.data().episode + '.json'
-          type = 'episode'
-          // window.dispatcher.trigger('pause', {id: $player.data().episode, type: type})
-        } else {
-          url = '/dvds/' + $player.data().dvd + '.json'
-          type = 'dvd'
-          // window.dispatcher.trigger('pause', {id: $player.data().dvd, type: type})
-        }
 
         // Update timer fields.
         // $.each $('.timer'), (idx, timer) ->
@@ -92,7 +96,8 @@ export default class Video extends Component {
 
   handleClick(event) {
     // Play and Pause when video element is clicked.
-    console.log('this.event.target:', this.event.target);
+    console.log('clicked... this.state:', this.state);
+    console.log('event.target:', event.target);
     this.state.$player.focus();
 
     if (this.state.$player.attr('src') != undefined) {
@@ -103,7 +108,7 @@ export default class Video extends Component {
       }
     } else {
       this.state.$player.prop('controls', true);
-      this.state.$player.prop('src', this.props.dvd.file_url);
+      this.state.$player.prop('src', this.state.file_url);
       this.state.$player.removeAttr('poster');
       this.state.player.play();
     }
@@ -192,28 +197,21 @@ export default class Video extends Component {
     this.state.$player.focus();
     var videoTime = this.getVideoTime(this.state.player.currentTime);
 
-    if (this.state.$player.hasClass('episode')) {
-      var url = this.props.episode.url;
-      // window.dispatcher.trigger('play', {id: $player.data().episode, type: 'episode'})
-    } else {
-      var url = this.props.dvd.url;
-      // window.dispatcher.trigger('play', {id: $player.data().dvd, type: 'dvd'})
-    }
-
     // $.get(url).then (data) ->
     //   self.currentTime = data.playback_time
     //   self.play()
   }
 
   render() {
-    console.log('this.props:', this.props);
+    // console.log('Video render this.props:', this.props);
+    console.log('Video render this.state:', this.state);
 
     return (
       <video
-        id={this.props.episode === null ? this.props.episode.id : this.props.dvd.id}
+        id={this.props.episode === null ? this.props.dvd.id : this.props.episode.id}
         className="player"
         poster={this.props.poster}
-         preload="false"
+        preload="false"
         onClick={this.handleClick.bind(this)}
         onDoubleClick={this.handleDoubleClick.bind(this)}
         onWheel={this.handleWheel.bind(this)}
