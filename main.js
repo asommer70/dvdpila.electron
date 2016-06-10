@@ -44,6 +44,10 @@ function createWindow () {
     console.log('term:', term);
     event.sender.send('search', term);
   });
+
+  mainWindow.on('resize', (event) => {
+    mainWindow.webContents.send('resize', mainWindow.getBounds());
+  });
 }
 
 // This method will be called when Electron has finished

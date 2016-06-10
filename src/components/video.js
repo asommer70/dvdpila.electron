@@ -11,14 +11,13 @@ export default class Video extends Component {
     this.state = {
       player: undefined,
       $player: undefined,
-      file_url: '',
+      file_url: null,
       url: '',
       type: ''
     }
   }
 
-  componentDidMount() {
-    console.log('componentDidMount this.props:', this.props);
+  componentWillReceiveProps() {
     var file_url, url, type, $player;
     if (this.props.episode !== null) {
       $player = $('#' + this.props.episode.id);
@@ -26,9 +25,11 @@ export default class Video extends Component {
       url = this.props.episode.url;
       type = 'episode'
     } else {
-      console.log('Video componentDidMount this.props:', this.props)
       $player = $('#' + this.props.dvd.id);
-      console.log('$player:', $player);
+      // $player = $('.player');
+
+      // console.log('$player:', $player);
+      console.log('rendering Video... this.props.dvd:', this.props.dvd, 'this.props.episode:', this.props.episode);
 
       file_url = this.props.dvd.file_url;
       url = this.props.dvd.url;
@@ -203,9 +204,7 @@ export default class Video extends Component {
   }
 
   render() {
-    // console.log('Video render this.props:', this.props);
-    console.log('Video render this.state:', this.state);
-
+    console.log('Video render this.props:', this.props);
     return (
       <video
         id={this.props.episode === null ? this.props.dvd.id : this.props.episode.id}

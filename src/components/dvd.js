@@ -16,7 +16,7 @@ export default class Dvd extends Component {
 
     this.state = {
       url: '',
-      dvd: {}
+      dvd: {episodes: []}
     }
   }
 
@@ -34,15 +34,14 @@ export default class Dvd extends Component {
     });
   }
 
-  render() {
+  getVideos() {
     var dvd = this.state.dvd;
 
-    var videos;
-    if (dvd.file_url == null && this.state.episodes != null) {
-      videos = (
+    if (this.state.dvd.episodes.length != 0) {
+      return (
         <ul className="episodes no-bullet">
           {
-            dvd.episodes.map((episode) => {
+            this.state.dvd.episodes.map((episode) => {
               return (
                 <li key={episode.id}>
                   <div className="episode">
@@ -64,16 +63,18 @@ export default class Dvd extends Component {
         </ul>
       )
     } else {
-      console.log('dvd:', dvd);
+      console.log('getVideos() this.state.dvd:', this.state.dvd);
 
-      videos = <div className="player-div"><Video poster={this.state.url + '/img/dvdpila_poster.png'} dvd={dvd} episode={null} /></div>;
+      return <div className="player-div"><Video poster={this.state.url + '/img/dvdpila_poster.png'} dvd={this.state.dvd} episode={null} /></div>;
     }
+  }
 
-    // console.log('videos:', videos);
+  render() {
+    var dvd = this.state.dvd;
+    console.log('render dvd:', dvd);
 
     return (
       <span>
-      <div className="row main dvd-container">
         <div className="small-4 columns dvd-info">
           <br/>
 
@@ -103,10 +104,9 @@ export default class Dvd extends Component {
 
         <div className="small-8 columns">
           <br/>
-          {videos}
+          {this.getVideos()}
           <br/><hr/><br/>
         </div>
-      </div>
       </span>
     );
   }

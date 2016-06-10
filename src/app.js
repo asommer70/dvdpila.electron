@@ -11,11 +11,21 @@ import Dvds from './components/dvds';
 import Dvd from './components/dvd';
 
 class App extends Component {
+  componentWillMount() {
+    ipcRenderer.on('resize', (event, bounds) => {
+      $($('.row.main').children()[0]).css('height', bounds.height);
+    });
+
+    $($('.row.main').children()[0]).css('height', window.innerHeight - 70 + 'px');
+  }
+
   render() {
     return (
       <span>
         <TitleBar />
-        {this.props.children || <Dvds />}
+        <div className="row main">
+          {this.props.children || <Dvds />}
+        </div>
       </span>
     );
   }
