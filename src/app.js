@@ -10,20 +10,18 @@ import TitleBar from './components/titlebar';
 import Dvds from './components/dvds';
 import Dvd from './components/dvd';
 
+// remote.BrowserWindow.addDevToolsExtension("/Users/adam/Library/Application\ Support/Google/Chrome/Default/Extensions/fmkadmapgofadopljbjfkapdkoienihi/0.14.11_0");
+remote.BrowserWindow.addDevToolsExtension('/Users/adam/work/react_dev_tools');
+
 class App extends Component {
   componentWillMount() {
-    ipcRenderer.on('resize', (event, bounds) => {
-      $($('.row.main').children()[0]).css('height', bounds.height);
-    });
-
-    $($('.row.main').children()[0]).css('height', window.innerHeight - 70 + 'px');
   }
 
   render() {
     return (
       <span>
         <TitleBar />
-        <div className="row main">
+        <div className="main">
           {this.props.children || <Dvds />}
         </div>
       </span>

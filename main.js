@@ -10,9 +10,12 @@ const BrowserWindow = electron.BrowserWindow
 // be closed automatically when the JavaScript object is garbage collected.
 let mainWindow
 
+// BrowserWindow.addDevToolsExtension('~/Library/Application Support/Google/Chrome/Default/Extensions/fmkadmapgofadopljbjfkapdkoienihi/0.14.11_0');
+
 function createWindow () {
   // Create the browser window.
-  mainWindow = new BrowserWindow({minWidth: 800, minHeight: 600, frame: false, title: 'DVD Pila!', titleBarStyle: 'hidden'})
+  mainWindow = new BrowserWindow({width: 800, height: 705, minWidth: 800, minHeight: 705, frame: false, title: 'DVD Pila!', titleBarStyle: 'hidden'})
+
 
   // and load the index.html of the app.
   mainWindow.loadURL(`file://${__dirname}/src/index.html`)

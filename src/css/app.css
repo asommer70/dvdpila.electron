@@ -127,9 +127,9 @@ body {
   height: 700px;
 }
 
-.row.main {
+.main {
   overflow-y: scroll;
-  /*height: 550px;*/
+  /*height: 600px;*/
 }
 
 video {

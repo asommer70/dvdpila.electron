@@ -29,6 +29,13 @@
 
       $(document).foundation();
       $("body").css("overflow", "hidden");
+      // var electron = require('electron');
+      // electron.BrowserWindow.addDevToolsExtension('/Users/adam/work/react_dev_tools');
+
+      if (process.env.NODE_ENV !== 'production') {
+        require('electron-react-devtools').inject()
+      }
+
     </script>
   </body>
 </html>

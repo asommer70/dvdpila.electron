@@ -102,7 +102,9 @@ export default class Dvds extends Component {
 
   render() {
     return (
-        <div className="columns small-12">
+      <span>
+      <div className="row">
+        <div className="columns">
           <div className={this.state.dvds.length == 0 ? "no-results" : "no-results hide" }>
             No results found for: {this.props.location.state !== null ? this.props.location.state.term : 'DVDs'}
           </div>
@@ -135,13 +137,21 @@ export default class Dvds extends Component {
               )
             })}
           </div>
-          <div className="row pager">
-            <div className="columns small-12">
-              <Pagination page={this.state.currentPage} pages={this.state.currentPage} handleClick={this.handlePageClick} />
-            </div>
-          </div>
-
         </div>
+
+        <div className="row pager">
+          <div className="columns small-11">
+            <Pagination
+              currentPage={this.state.currentPage}
+              pages={this.state.pages}
+              totalPages={this.state.totalPages}
+              handleClick={this.handlePageClick}
+            />
+          </div>
+        </div>
+      </div>
+
+      </span>
     )
   }
 }
