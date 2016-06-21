@@ -70,26 +70,30 @@ export default class Dvds extends Component {
     } else {
       api.getDvds(this.state.url, page, (data) => {
         console.log('data:', data);
-        var pages = Array.apply(null, Array(9)).map(function (_, i) {return i;});
+        var pages = Array.apply(null, Array(data.count / 10)).map(function (_, i) {return i;});
         this.setState({dvds: data.dvds, totalPages: data.count / 10, pages: pages});
       });
     }
   }
 
-  paginate() {
-    console.log('this.state.page:', this.state.pages, 'this.state.currentPage:', this.state.currentPage);
-    for (var i = 1; i < this.state.pages; i++) {
-      console.log('i:', i);
-      return (
-        <li key={i}><a href="#" onClick={this.handlePageClick.bind(this)} data-page={i} aria-label="Page {i}">{i}</a></li>
-      )
-    }
-  }
+  // paginate() {
+  //   console.log('this.state.page:', this.state.pages, 'this.state.currentPage:', this.state.currentPage);
+  //   for (var i = 1; i < this.state.pages; i++) {
+  //     console.log('i:', i);
+  //     return (
+  //       <li key={i}><a href="#" onClick={this.handlePageClick.bind(this)} data-page={i} aria-label="Page {i}">{i}</a></li>
+  //     )
+  //   }
+  // }
 
-  handlePageClick(event) {
-    console.log('pageClick event.target:', $(event.target).data().page);
-    var page = $(event.target).data().page;
+  handlePageClick(page) {
+    // console.log('pageClick event.target:', $(event.target).data().page);
+    // var page = $(event.target).data().page;
+    // var page = event;
+
+    console.log('page:', page);
     localStorage.setItem('page', page);
+
     api.getDvds(this.state.url, page, (data) => {
       // var pages = Array.apply(null, Array(page + )).map(function (_, i) {return i;});
       var pages = [];
@@ -145,7 +149,7 @@ export default class Dvds extends Component {
               currentPage={this.state.currentPage}
               pages={this.state.pages}
               totalPages={this.state.totalPages}
-              handleClick={this.handlePageClick}
+              handleClick={this.handlePageClick.bind(this)}
             />
           </div>
         </div>
